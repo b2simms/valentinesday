@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #E4CDD3;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Box-area {
+  width: 90vw;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  border-radius: 10px;
+  position: relative;
+}
+
+.Click-box {
+  background-color: #E24767;
+  height: 15vw;
+  width: 15vw;
+  border-radius: 1vw;
+  position: absolute;
+}
+
+.shimmer {
+  color: grey;
+  display: inline-block;
+  -webkit-mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/300% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 2.5s infinite;
+  font-size: 50px;
+  max-width: 200px;
+}
+
+@keyframes shimmer {
+  100% {
+    -webkit-mask-position: left
+  }
+}
+
+.heart {
+  position: absolute;
+  bottom: 0;
+}
+
+.heart:before,
+.heart:after {
+  /* Ratio: width 5, height 8 */
+  position: absolute;
+  content: "";
+  left: 15vw;
+  top: 0;
+  width: 15vw;
+  height: 24vw;
+  background: #E24767;
+  border-radius: 15vw 15vw 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+
+.heart:after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
