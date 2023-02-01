@@ -8,7 +8,7 @@ body {
 .App {
   text-align: center;
   width: 100%;
-  max-width: 900px;
+  max-width: 600px;
   color: white;
   font-size: calc(10px + 2vmin);
   position: relative;
@@ -35,6 +35,34 @@ body {
   position: absolute;
 }
 
+.Neon-box {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+}
+
+.Neon-bottom {
+  background-color: #FF5E00;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 6px 6px 6px 6px #3333;
+}
+
+.Neon-top {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
 .shimmer {
   color: grey;
   display: inline-block;
@@ -49,8 +77,6 @@ body {
     -webkit-mask-position: left
   }
 }
-
-.heart {}
 
 .heart:before,
 .heart:after {
@@ -75,6 +101,16 @@ body {
 
 .clear {
   background-color: transparent;
+}
+
+.blink {
+  animation: blink-animation 2s ease infinite;
+}
+
+@keyframes blink-animation {
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @media screen and (min-width: 600px) {

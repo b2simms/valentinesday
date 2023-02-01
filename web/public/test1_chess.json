@@ -1,0 +1,36 @@
+{
+    "id": "1",
+    "name": "Brent",
+    "puzzles": [
+        {
+            "type": "chess",
+            "link": "S3 hosted public",
+            "text": "base64encoded",
+            "answers": []
+        },
+        {
+            "type": "<page>",
+            "link": "S3 hosted public",
+            "text": "base64encoded",
+            "answers": []
+        },
+        {
+            "type": "<page>",
+            "link": "S3 hosted public",
+            "text": "base64encoded",
+            "answers": []
+        },
+        {
+            "type": "<page>",
+            "link": "S3 hosted public",
+            "text": "base64encoded",
+            "answers": []
+        },
+        {
+            "type": "<page>",
+            "link": "S3 hosted public",
+            "text": "base64encoded",
+            "answers": []
+        }
+    ]
+}
