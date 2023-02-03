@@ -1,11 +1,11 @@
 import './AnswerForm.css';
 import React, { useState, useEffect } from 'react';
-import { Button, Link, TextField } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 // import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import FuzzySet from 'fuzzyset.js';
-import CircularIntegration from './CircleIntegration';
+import AnswerField from './AnswerField';
 
 function AnswerForm() {
 
@@ -61,6 +61,14 @@ function AnswerForm() {
     setAnswers(answers);
   };
 
+  const handleClickShowPassword = () => {
+    console.log('handleClickShowPassword');
+  }
+
+  const handleMouseDownPassword = () => {
+    console.log('handleMouseDownPassword');
+  }
+
 
   const renderInputs = pNodes => {
   }
@@ -77,14 +85,25 @@ function AnswerForm() {
       <div className='Answers'>
         {item && item.answers && item.answers.map((item, index) =>
           <div className='spacer' key={item.label + '_' + index}>
-            <TextField
+            {/* <TextField
               required
               label={item.label}
               defaultValue=''
               onChange={(e) => handleChange(e, item.label + '_' + index)}
               placeholder={item.value}
-            />
-            <CircularIntegration></CircularIntegration>
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            /> */}
+            <AnswerField></AnswerField>
             <Button color="warning" onClick={() => checkAnswer(item.value, item.label + '_' + index)}>Check</Button>
           </div>
         )}
