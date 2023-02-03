@@ -1,9 +1,9 @@
 import './AnswerForm.css';
 import React, { useState, useEffect } from 'react';
 import { Button, Link } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ExtensionIcon from '@mui/icons-material/Extension';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-// import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { green } from '@mui/material/colors';
 import FuzzySet from 'fuzzyset.js';
 import AnswerField from './AnswerField';
 
@@ -82,6 +82,7 @@ function AnswerForm() {
           <Button color="info" style={{ backgroundColor: "orange" }} endIcon={<OpenInNewIcon />}>Puzzle Link</Button>
         </Link>
       </p>
+      <p>Open the puzzle link and fill in the answer{item.answers.length > 1 && `s`} below.</p>
       <div className='Answers'>
         {item && item.answers && item.answers.map((item, index) =>
           <div className='spacer' key={item.label + '_' + index}>
@@ -109,7 +110,7 @@ function AnswerForm() {
         )}
       </div>
       <p>
-        <CheckCircleOutlineIcon color="success" style={{ height: "100px", width: "100px" }}></CheckCircleOutlineIcon>
+        <ExtensionIcon style={{ height: "100px", width: "100px", color: green[500] }}></ExtensionIcon>
       </p>
     </div>
   );
