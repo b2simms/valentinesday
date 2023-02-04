@@ -12,17 +12,6 @@ export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/form">Form</Link>
-            </li>
-          </ul>
-        </nav>
-
         {/* A <Routes> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Routes>

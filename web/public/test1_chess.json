@@ -23,10 +23,24 @@
             ]
         },
         {
-            "type": "<page>",
+            "type": "aws",
             "link": "https://cdn2.iconfinder.com/data/icons/amazon-aws-stencils/100/Non-Service_Specific_copy__AWS_Cloud-512.png",
             "text": "base64encoded",
-            "answers": []
+            "answers": [
+                {
+                    "label": "Brent Identify",
+                    "value": "brent"
+                },
+                {
+                    "label": "Brent Identify",
+                    "value": "brent"
+                },
+                {
+                    "label": "Brent person",
+                    "value": "brent",
+                    "validationType": "strict"
+                }
+            ]
         },
         {
             "type": "<page>",
