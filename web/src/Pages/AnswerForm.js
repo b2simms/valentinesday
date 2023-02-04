@@ -1,17 +1,18 @@
 import './AnswerForm.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Link } from '@mui/material';
-import ExtensionIcon from '@mui/icons-material/Extension';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { green } from '@mui/material/colors';
+import { green, grey } from '@mui/material/colors';
 import FuzzySet from 'fuzzyset.js';
 import AnswerField from './AnswerField';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockIcon from '@mui/icons-material/Lock';
 
 function AnswerForm() {
 
-  const [completedCount, setCompletedCount] = useState(0);
-  const [answers, setAnswers] = useState({});
-
+  const answerRef = useRef('');
+  const [answers, setAnswers] = useState([]);
+  const [allCorrect, setAllCorrect] = useState(false);
 
   const item = {
     type: "vpn",
@@ -22,55 +23,53 @@ function AnswerForm() {
     answers: [
       {
         label: "Host Identify",
-        value: "cloud",
+        value: "aaaa",
         validationType: "strict"
       },
       {
         label: "Test Identify",
-        value: "test"
-      },
-      {
-        label: "Host person",
-        value: "mandell"
+        value: "-1"
       }
     ]
   };
 
   useEffect(() => {
-    console.log('run ONCE.');
+    setAnswers(item?.answers?.map(i => false))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const checkAnswer = (expected, key) => {
-    console.log(`checkAnswer`);
-    const actual = answers[key];
-    console.log(`actual: ${actual}`);
-    console.log(`expected: ${expected}`);
+  useEffect(() => {
+    answerRef.current = answers;
+  }, [answers]);
+
+  const checkAnswer = (expected, inputActual, isStrict) => {
+    const actual = inputActual?.trim() + '';
+    if (!actual || actual.length === 0) {
+      return false;
+    }
+    if (isStrict) {
+      return expected === actual;
+    }
     // fuzzy check
     const fs = FuzzySet([expected], false);
     const res = fs.get(actual);
-    console.log(res);
     if (res && res[0] && res[0][0] > 0.70) {
-      console.log('VALID');
+      return true;
     }
-    // strip whitespace
+    return false;
   };
 
-
-  const handleChange = (e, key) => {
-    answers[key] = e.target.value;
-    setAnswers(answers);
-  };
-
-  const handleClickShowPassword = () => {
-    console.log('handleClickShowPassword');
-  }
-
-  const handleMouseDownPassword = () => {
-    console.log('handleMouseDownPassword');
-  }
-
-
-  const renderInputs = pNodes => {
+  const notifyAnswer = (key, guess) => {
+    const obj = item?.answers[key];
+    // check that answer
+    const res = checkAnswer(obj?.value, guess, obj?.validationType === 'strict');
+    // create new array and use ref to get most current
+    const newAnswers = [...answerRef.current];
+    newAnswers[key] = res ? res : false;
+    setAnswers(newAnswers);
+    // set correct
+    const isCorrect = newAnswers.reduce((r, acc) => r && acc, true);
+    setAllCorrect(isCorrect)
   }
 
   return (
@@ -86,31 +85,17 @@ function AnswerForm() {
       <div className='Answers'>
         {item && item.answers && item.answers.map((item, index) =>
           <div className='spacer' key={item.label + '_' + index}>
-            {/* <TextField
-              required
+            <AnswerField
               label={item.label}
-              defaultValue=''
-              onChange={(e) => handleChange(e, item.label + '_' + index)}
-              placeholder={item.value}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            /> */}
-            <AnswerField></AnswerField>
-            <Button color="warning" onClick={() => checkAnswer(item.value, item.label + '_' + index)}>Check</Button>
+              answerKey={index}
+              notifyAnswer={notifyAnswer}
+              correct={answers[index]}
+            ></AnswerField>
           </div>
         )}
       </div>
       <p>
-        <ExtensionIcon style={{ height: "100px", width: "100px", color: green[500] }}></ExtensionIcon>
+        {allCorrect ? <LockOpenIcon style={{ height: "100px", width: "100px", color: green[500] }} /> : <LockIcon style={{ height: "100px", width: "100px", color: grey[800] }} />}
       </p>
     </div>
   );

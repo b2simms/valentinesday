@@ -26,6 +26,15 @@ body {
   margin: 12px 0;
 }
 
+.insetBox {
+  height: 124px;
+  width: 124px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: inset -10px -10px 15px rgba(255, 255, 255, 0.5),
+    inset 10px 10px 15px rgba(70, 70, 70, 0.12);
+}
+
 @media screen and (min-width: 600px) {
   .Click-box {
     width: 100px;

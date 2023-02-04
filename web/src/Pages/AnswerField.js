@@ -10,18 +10,22 @@ import FormControl from '@mui/material/FormControl';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function AnswerField() {
+export default function AnswerField({
+    label,
+    answerKey,
+    notifyAnswer,
+    correct
+}) {
     const [showLoading, setShowLoading] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [isLoaded, setIsLoaded] = React.useState(false);
-    const [success, setSuccess] = React.useState(false);
     const timer = React.useRef(-1);
 
     const buttonSx = {
-        ...(success && {
+        ...(correct && {
             bgcolor: green[500]
         }),
-        ...(!success && {
+        ...(!correct && {
             bgcolor: red[500]
         })
     };
@@ -37,14 +41,15 @@ export default function AnswerField() {
         setLoading(true);
         setIsLoaded(false);
         setShowLoading(false);
-        if (e.target && e.target.value && e.target.value.length > 0) {
-            setShowLoading(true);
+        if (e?.target?.value?.length === 0) {
+            notifyAnswer(answerKey, null);
+            return;
         }
+        setShowLoading(true);
         timer.current = window.setTimeout(() => {
-            console.log(e.target.value);
-            setSuccess(e.target.value === 'test');
             setLoading(false);
             setIsLoaded(true);
+            notifyAnswer(answerKey, e.target.value);
         }, 2000);
     };
 
@@ -52,14 +57,14 @@ export default function AnswerField() {
 
     return (
         <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-            <InputLabel htmlFor={id}>Password</InputLabel>
+            <InputLabel htmlFor={id}>{label}</InputLabel>
             <OutlinedInput
                 id={id}
                 required
-                label='Password'
+                label={label}
                 defaultValue=''
                 onChange={(e) => handleTextChange(e)}
-                placeholder='item.value'
+                placeholder={label}
                 endAdornment={
                     <InputAdornment position="end">
                         {showLoading ?
@@ -71,7 +76,7 @@ export default function AnswerField() {
                                     size='small'
                                     sx={buttonSx}
                                 >
-                                    {success ? <CheckIcon /> : <CloseIcon />}
+                                    {correct ? <CheckIcon /> : <CloseIcon />}
                                 </Avatar> : ``}
                             </div> : ``}
                     </InputAdornment>

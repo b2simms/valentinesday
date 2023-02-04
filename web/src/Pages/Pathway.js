@@ -104,6 +104,7 @@ function Pathway() {
 
   return (
     <div className="App" style={{ marginTop: '120px', height: (completedCount * TOP_OFFSET) + 150 + "px" }}>
+      <div className="progressPath" style={{ height: (completedCount * TOP_OFFSET) - 50 + "px" }}></div>
       {pathEdges && pathEdges.length > 0 && renderEdges(pathEdges)}
       {pathNodes && pathNodes.length > 0 && renderNodes(pathNodes)}
     </div >
