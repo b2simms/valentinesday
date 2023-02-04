@@ -7,34 +7,33 @@ import FuzzySet from 'fuzzyset.js';
 import AnswerField from './AnswerField';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
+import { useNavigate } from "react-router-dom";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 function AnswerForm() {
 
   const answerRef = useRef('');
+  const [puzzle, setPuzzle] = useState({});
   const [answers, setAnswers] = useState([]);
   const [allCorrect, setAllCorrect] = useState(false);
-
-  const item = {
-    type: "vpn",
-    link: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/AWS_Simple_Icons_Virtual_Private_Cloud.svg/1280px-AWS_Simple_Icons_Virtual_Private_Cloud.svg.png",
-    text: "See the AWS private virtual cloud.",
-    // individual, group (add groupId to answers to validation them together)
-    validationBy: "individual",
-    answers: [
-      {
-        label: "Host Identify",
-        value: "aaaa",
-        validationType: "strict"
-      },
-      {
-        label: "Test Identify",
-        value: "-1"
-      }
-    ]
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setAnswers(item?.answers?.map(i => false))
+    const puzzleMapStr = localStorage.getItem('PUZZLE_PATH_JSON');
+    if (!puzzleMapStr) {
+      navigate('/');
+      return;
+    }
+    const localCount = localStorage.getItem('PUZZLE_COMPLETED_COUNT');
+    if (!localCount) {
+      navigate('/');
+      return;
+    }
+    // extract string
+    const puzzleMap = JSON.parse(puzzleMapStr);
+    let localCountNum = typeof localCount === 'string' ? parseInt(localCount) : localCount;
+    setPuzzle(puzzleMap?.puzzles[localCountNum]);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -60,7 +59,7 @@ function AnswerForm() {
   };
 
   const notifyAnswer = (key, guess) => {
-    const obj = item?.answers[key];
+    const obj = puzzle?.answers[key];
     // check that answer
     const res = checkAnswer(obj?.value, guess, obj?.validationType === 'strict');
     // create new array and use ref to get most current
@@ -72,18 +71,21 @@ function AnswerForm() {
     setAllCorrect(isCorrect)
   }
 
+  const backButton = () => navigate('/');
+
   return (
     <div className="App">
-      <h1>{item.type}</h1>
-      <p>{item.text}</p>
+      <div onClick={backButton}><ArrowBackIosIcon /></div>
+      <h1>{puzzle.type}</h1>
+      <p>{puzzle.text}</p>
       <p>
-        <Link href={item.link} rel="noreferrer" target="_blank" underline="none">
+        <Link href={puzzle.link} rel="noreferrer" target="_blank" underline="none">
           <Button color="info" style={{ backgroundColor: "orange" }} endIcon={<OpenInNewIcon />}>Puzzle Link</Button>
         </Link>
       </p>
-      <p>Open the puzzle link and fill in the answer{item.answers.length > 1 && `s`} below.</p>
+      <p>Open the puzzle link and fill in the answer{puzzle?.answers?.length > 1 && `s`} below.</p>
       <div className='Answers'>
-        {item && item.answers && item.answers.map((item, index) =>
+        {puzzle?.answers?.map((item, index) =>
           <div className='spacer' key={item.label + '_' + index}>
             <AnswerField
               label={item.label}

@@ -17,7 +17,8 @@
                 },
                 {
                     "label": "Host person",
-                    "value": "mandell"
+                    "value": "mandell",
+                    "validationType": "strict"
                 }
             ]
         },

@@ -2,18 +2,20 @@ import './Pathway.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { generatePathNodes, TOP_OFFSET, NODE_RADIUS } from './PathNodes';
+import { useNavigate } from "react-router-dom";
 
 function Pathway() {
 
   const [completedCount, setCompletedCount] = useState(0);
   const [pathNodes, setPathNodes] = useState([]);
   const [pathEdges, setPathEdges] = useState([]);
+  const navigate = useNavigate();
 
   const onBoxClick = () => {
     console.log(`onBoxClick`);
     if (completedCount < pathNodes.length - 1) {
-      setCompletedCount(completedCount + 1);
-      console.log(`completedCount ${completedCount}`);
+      // open form
+      navigate('/form');
     } else {
       console.log('All done.')
       console.log(`completedCount ${completedCount}`);
@@ -35,7 +37,18 @@ function Pathway() {
   };
 
   useEffect(() => {
-    console.log('run ONCE.');
+    const localCount = localStorage.getItem('PUZZLE_COMPLETED_COUNT');
+    if (localCount) {
+      if (typeof localCount === 'string') {
+        setCompletedCount(parseInt(localCount))
+      } else {
+        setCompletedCount(localCount)
+      }
+    } else {
+      setCompletedCount(0);
+      localStorage.setItem('PUZZLE_COMPLETED_COUNT', 0);
+    }
+
     axios.get('test1_chess.json')
       .then(result => {
         console.log('API data:');
@@ -44,6 +57,8 @@ function Pathway() {
         updateFavicon(result.data && result.data.faviconUrl);
         setPathNodes(nodes);
         setPathEdges(edges);
+
+        localStorage.setItem('PUZZLE_PATH_JSON', JSON.stringify(result.data));
       })
   }, []);
 
