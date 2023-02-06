@@ -56,6 +56,9 @@ function AnswerForm() {
 
   useEffect(() => {
     setAnswers(puzzle?.answers?.map(i => false));
+    if (puzzle?.answers?.length === 0) {
+      setAllCorrect(true);
+    }
   }, [puzzle]);
 
   useEffect(() => {

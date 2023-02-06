@@ -13,7 +13,7 @@ function Pathway() {
 
   const onBoxClick = () => {
     console.log(`onBoxClick`);
-    if (completedCount < pathNodes.length - 1) {
+    if (completedCount <= pathNodes.length - 1) {
       // open form
       navigate('/form');
     } else {
@@ -65,18 +65,25 @@ function Pathway() {
   const renderEdges = pEdges => {
     let htmlEdges = [];
     // add edges up to before the current count
-    for (let i = 0; i < completedCount - 1; i++) {
+    let progressCount = completedCount;
+    let overflowFlag = false;
+    if (completedCount >= pathNodes.length) {
+      progressCount = pathNodes.length - 1;
+      overflowFlag = true;
+    }
+    for (let i = 0; i < progressCount; i++) {
       let dashedLine = '';
       // set last node as active
-      if (i === completedCount - 1) {
-        dashedLine = '10'
+      if (i === progressCount - 1 && !overflowFlag) {
+        // dashedLine = '10'
+        continue;
       }
       const item = pEdges[i];
       htmlEdges.push(
         <svg
           key={Math.random()}
           width="100%"
-          height={(completedCount * TOP_OFFSET) + NODE_RADIUS}
+          height={(progressCount * TOP_OFFSET) + NODE_RADIUS}
           className="Lines-area">
           <line strokeWidth="5"
             strokeDasharray={dashedLine}
@@ -93,10 +100,16 @@ function Pathway() {
   const renderNodes = pNodes => {
     let htmlNodes = [];
     // add edges up to and equalling the current count
-    for (let i = 0; i <= completedCount; i++) {
+    let progressCount = completedCount;
+    let overflowFlag = false;
+    if (completedCount >= pathNodes.length) {
+      progressCount = pathNodes.length - 1;
+      overflowFlag = true;
+    }
+    for (let i = 0; i <= progressCount; i++) {
       const item = pNodes[i];
       // set last node as active
-      if (i === completedCount) {
+      if (i === progressCount && !overflowFlag) {
         htmlNodes.push(<div key={Math.random()}>
           <div
             className="Neon-box"
