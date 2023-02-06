@@ -6,7 +6,23 @@
             "type": "sudoku",
             "link": "S3 hosted public",
             "text": "base64encoded",
-            "answers": []
+            "answers": [
+                {
+                    "label": "Top Left",
+                    "value": "1",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Top Middle",
+                    "value": "2",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Top Right",
+                    "value": "3",
+                    "validationType": "strict"
+                }
+            ]
         },
         {
             "type": "<page>",

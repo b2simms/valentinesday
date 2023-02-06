@@ -5,6 +5,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { green, grey } from '@mui/material/colors';
 import FuzzySet from 'fuzzyset.js';
 import AnswerField from './AnswerField';
+import SingleNumberField from './SingleNumberField';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import { useNavigate } from "react-router-dom";
@@ -102,6 +103,41 @@ function AnswerForm() {
     setAllCorrect(isCorrect)
   }
 
+  const renderAnswers = (answrs) => {
+    const htmlAnswers = [];
+    // render by type
+    if (puzzle?.type === 'sudoku') {
+      for (let i = 0; i < answrs.length - 1; i++) {
+        const item = answrs[i];
+        if (i % 3 === 0) {
+          htmlAnswers.push(<hr />)
+        }
+        htmlAnswers.push(
+          <div className='spacer' key={item.label + '_' + i}>
+            <SingleNumberField
+              answerKey={i}
+              notifyAnswer={notifyAnswer}
+            />
+          </div>);
+      }
+      return htmlAnswers;
+    } else {
+      for (let i = 0; i < answrs.length - 1; i++) {
+        const item = answrs[i];
+        htmlAnswers.push(
+          <div className='spacer' key={item.label + '_' + i}>
+            <AnswerField
+              label={item.label}
+              answerKey={i}
+              notifyAnswer={notifyAnswer}
+              correct={item}
+            />
+          </div>);
+      }
+      return htmlAnswers;
+    }
+  }
+
   const backButton = () => navigate('/');
 
   return (
@@ -116,16 +152,7 @@ function AnswerForm() {
       </p>
       <p>Open the puzzle link and fill in the answer{puzzle?.answers?.length > 1 && `s`} below.</p>
       <div className='Answers'>
-        {puzzle?.answers?.map((item, index) =>
-          <div className='spacer' key={item.label + '_' + index}>
-            <AnswerField
-              label={item.label}
-              answerKey={index}
-              notifyAnswer={notifyAnswer}
-              correct={answers && answers[index]}
-            ></AnswerField>
-          </div>
-        )}
+        {answers && renderAnswers(answers)}
       </div>
       <p>
         {allCorrect ? <LockOpenIcon className='Lock' onClick={openModal} style={{ height: "100px", width: "100px", color: green[500], cursor: 'pointer' }} /> : <LockIcon style={{ height: "100px", width: "100px", color: grey[800] }} />}

@@ -49,7 +49,7 @@ function Pathway() {
       localStorage.setItem('PUZZLE_COMPLETED_COUNT', 0);
     }
 
-    axios.get('test1_chess.json')
+    axios.get('test1_sudoku.json')
       .then(result => {
         console.log('API data:');
         console.log(result.data);
