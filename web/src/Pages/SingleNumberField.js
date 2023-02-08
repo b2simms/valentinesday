@@ -3,7 +3,8 @@ import TextField from '@mui/material/TextField';
 
 export default function SingleNumberField({
     answerKey,
-    notifyAnswer
+    notifyAnswer,
+    width
 }) {
     const [value, setValue] = useState(null);
     const [lastValidValue, setLastValidValue] = useState(null);
@@ -11,22 +12,31 @@ export default function SingleNumberField({
     const onChange = (e) => {
         const re = /^[1-9\b]+$/;
 
-        // if value is not blank, then test the regex
-        if (e.target.value === '' || re.test(e.target.value)) {
+        // check if blank
+        if (e.target.value === '') {
+            setValue('');
+            setLastValidValue('');
+            notifyAnswer(answerKey, '');
+            return;
+        }
+        // check if valid input
+        if (re.test(e.target.value)) {
             const singleNumber = e.target.value[e.target.value.length - 1];
             setValue(singleNumber);
             setLastValidValue(singleNumber);
+            notifyAnswer(answerKey, singleNumber);
         } else {
-            setValue(lastValidValue ? lastValidValue : '');
+            const currentValue = lastValidValue ? lastValidValue : '';
+            setValue(currentValue);
+            notifyAnswer(answerKey, currentValue);
         }
     }
 
     return (
         <TextField
-            name="maxNodeSelectedCount"
             onChange={onChange}
             value={value}
-            InputProps={{ inputProps: { min: 1, max: 9 } }}
+            style={{ width: `${width}px` }}
         />
     );
 }

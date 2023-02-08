@@ -2,7 +2,7 @@ import './AnswerForm.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Link } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { green, grey } from '@mui/material/colors';
+import { green, grey, red } from '@mui/material/colors';
 import FuzzySet from 'fuzzyset.js';
 import AnswerField from './AnswerField';
 import SingleNumberField from './SingleNumberField';
@@ -13,6 +13,9 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import CelebrationIcon from '@mui/icons-material/Celebration';
+import Grid from '@mui/material/Grid';
+
+const SINGLE_BOX_WIDTH_PX = 55;
 
 const style = {
   position: 'absolute',
@@ -28,10 +31,11 @@ const style = {
 
 function AnswerForm() {
 
-  const answerRef = useRef('');
+  const guessRef = useRef('');
   const [puzzle, setPuzzle] = useState({});
-  const [answers, setAnswers] = useState([]);
+  const [guesses, setGuesses] = useState([]);
   const [allCorrect, setAllCorrect] = useState(false);
+  const [allGuessed, setAllGuesses] = useState(false);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const openModal = () => setOpen(true);
@@ -56,15 +60,20 @@ function AnswerForm() {
   }, []);
 
   useEffect(() => {
-    setAnswers(puzzle?.answers?.map(i => false));
+    setGuesses(puzzle?.answers?.map((i) => {
+      return {
+        guess: '',
+        correct: false
+      }
+    }));
     if (puzzle?.answers?.length === 0) {
       setAllCorrect(true);
     }
   }, [puzzle]);
 
   useEffect(() => {
-    answerRef.current = answers;
-  }, [answers]);
+    guessRef.current = guesses;
+  }, [guesses]);
 
   const onPuzzleCompleteClick = () => {
     let localCount = localStorage.getItem('PUZZLE_COMPLETED_COUNT');
@@ -95,34 +104,43 @@ function AnswerForm() {
     // check that answer
     const res = checkAnswer(obj?.value, guess, obj?.validationType === 'strict');
     // create new array and use ref to get most current
-    const newAnswers = [...answerRef.current];
-    newAnswers[key] = res ? res : false;
-    setAnswers(newAnswers);
+    const newGuesses = [...guessRef.current];
+    newGuesses[key] = {
+      guess,
+      correct: res ? res : false
+    }
+    setGuesses(newGuesses);
     // set correct
-    const isCorrect = newAnswers.reduce((r, acc) => r && acc, true);
-    setAllCorrect(isCorrect)
+    const isIncorrect = newGuesses.find(e => e.correct === false) ? true : false;
+    setAllCorrect(!isIncorrect);
+    // set guesses
+    const isMissingGuess = newGuesses.find(e => e.guess === '') ? true : false;
+    setAllGuesses(!isMissingGuess);
   }
 
   const renderAnswers = (answrs) => {
+    if (!answrs || answrs.length === 0) {
+      return ``;
+    }
     const htmlAnswers = [];
     // render by type
     if (puzzle?.type === 'sudoku') {
-      for (let i = 0; i < answrs.length - 1; i++) {
-        const item = answrs[i];
-        if (i % 3 === 0) {
-          htmlAnswers.push(<hr />)
-        }
-        htmlAnswers.push(
-          <div className='spacer' key={item.label + '_' + i}>
+      return <Grid container
+        spacing={{ xs: 0, sm: 0, md: 0 }}
+        columns={{ xs: 12, sm: 12, md: 12 }}
+        style={{ margin: 'auto', width: `${3 * SINGLE_BOX_WIDTH_PX}px` }}>
+        {answrs.map((_, index) => (
+          <Grid item xs={4} sm={4} md={4} key={index}>
             <SingleNumberField
-              answerKey={i}
+              answerKey={index}
               notifyAnswer={notifyAnswer}
+              width={SINGLE_BOX_WIDTH_PX}
             />
-          </div>);
-      }
-      return htmlAnswers;
+          </Grid>
+        ))}
+      </Grid>
     } else {
-      for (let i = 0; i < answrs.length - 1; i++) {
+      for (let i = 0; i < answrs.length; i++) {
         const item = answrs[i];
         htmlAnswers.push(
           <div className='spacer' key={item.label + '_' + i}>
@@ -138,24 +156,39 @@ function AnswerForm() {
     }
   }
 
+  const renderCorrect = () => {
+    if (allCorrect) {
+      return <LockOpenIcon
+        className='LockActiveGreen'
+        onClick={openModal}
+        style={{ height: "100px", width: "100px", color: green[500], cursor: 'pointer' }} />
+    } else if (allGuessed) {
+      return <LockIcon className='LockActiveRed' style={{ height: "100px", width: "100px", color: red[800] }} />
+    } else {
+      return <LockIcon style={{ height: "100px", width: "100px", color: grey[800] }} />
+    }
+  }
+
   const backButton = () => navigate('/');
 
   return (
     <div className="App">
       <div onClick={backButton} style={{ cursor: 'pointer' }}><ArrowBackIosIcon /></div>
       <h1>{puzzle.type}</h1>
-      <p>{puzzle.text}</p>
+      <p>Open the puzzle link and follow the instructions below</p>
       <p>
         <Link href={puzzle.link} rel="noreferrer" target="_blank" underline="none">
           <Button color="info" style={{ backgroundColor: "orange" }} endIcon={<OpenInNewIcon />}>Puzzle Link</Button>
         </Link>
       </p>
-      <p>Open the puzzle link and fill in the answer{puzzle?.answers?.length > 1 && `s`} below.</p>
+      <p>
+        Instructions: {puzzle.text}
+      </p>
       <div className='Answers'>
-        {answers && renderAnswers(answers)}
+        {puzzle && renderAnswers(puzzle.answers)}
       </div>
       <p>
-        {allCorrect ? <LockOpenIcon className='Lock' onClick={openModal} style={{ height: "100px", width: "100px", color: green[500], cursor: 'pointer' }} /> : <LockIcon style={{ height: "100px", width: "100px", color: grey[800] }} />}
+        {renderCorrect()}
       </p>
       <Modal
         open={open}
