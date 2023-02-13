@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xe
 
 DEPLOY_REPO='../../app/'
 
@@ -16,6 +17,9 @@ rm -f $DEPLOY_REPO/*.ico
 # move to deploy repository
 cp -r build/* $DEPLOY_REPO
 
+cd $DEPLOY_REPO
 git add .
 git commit -m "deploying code..."
 git push
+
+echo 'Complete'

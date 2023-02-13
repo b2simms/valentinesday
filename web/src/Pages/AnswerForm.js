@@ -148,7 +148,7 @@ function AnswerForm() {
               label={item.label}
               answerKey={i}
               notifyAnswer={notifyAnswer}
-              correct={item}
+              correct={guesses && guesses[i]?.correct}
             />
           </div>);
       }
@@ -171,13 +171,15 @@ function AnswerForm() {
 
   const backButton = () => navigate('/');
 
+  const jumpLink = puzzle?.link?.indexOf("http") === 0 ? puzzle.link : window.location.href.replace('/form', '') + puzzle.link;
+
   return (
     <div className="App">
       <div onClick={backButton} style={{ cursor: 'pointer' }}><ArrowBackIosIcon /></div>
       <h1>{puzzle.type}</h1>
       <p>Open the puzzle link and follow the instructions below</p>
       <p>
-        <Link href={puzzle.link} rel="noreferrer" target="_blank" underline="none">
+        <Link href={jumpLink} rel="noreferrer" target="_blank" underline="none">
           <Button color="info" style={{ backgroundColor: "orange" }} endIcon={<OpenInNewIcon />}>Puzzle Link</Button>
         </Link>
       </p>
