@@ -3,53 +3,23 @@
     "name": "Brent",
     "puzzles": [
         {
-            "type": "sudoku",
-            "link": "S3 hosted public",
-            "text": "Fill in the middle square of the Sudoku puzzle",
+            "type": "chess",
+            "link": "https://puzzlepathway.github.io/app/chess-puzzles",
+            "text": "Write the answers to the chess puzzles using proper chess notation",
             "answers": [
                 {
-                    "label": "Top Left",
-                    "value": "1",
+                    "label": "Chess Puzzle 1",
+                    "value": "Qd4+",
                     "validationType": "strict"
                 },
                 {
-                    "label": "Top Middle",
-                    "value": "2",
+                    "label": "Chess Puzzle 2",
+                    "value": "Qh8+",
                     "validationType": "strict"
                 },
                 {
-                    "label": "Top Right",
-                    "value": "3",
-                    "validationType": "strict"
-                },
-                {
-                    "label": "Middle Left",
-                    "value": "4",
-                    "validationType": "strict"
-                },
-                {
-                    "label": "Middle Middle",
-                    "value": "5",
-                    "validationType": "strict"
-                },
-                {
-                    "label": "Middle Right",
-                    "value": "6",
-                    "validationType": "strict"
-                },
-                {
-                    "label": "Bottom Left",
-                    "value": "7",
-                    "validationType": "strict"
-                },
-                {
-                    "label": "Bottom Middle",
-                    "value": "8",
-                    "validationType": "strict"
-                },
-                {
-                    "label": "Bottom Right",
-                    "value": "9",
+                    "label": "Chess Puzzle 3",
+                    "value": "Qxg3!",
                     "validationType": "strict"
                 }
             ]
