@@ -71,7 +71,7 @@
                 },
                 {
                     "label": "Chess Puzzle 3",
-                    "value": "Qxg3!",
+                    "value": "Qxg3",
                     "validationType": "strict"
                 }
             ]
