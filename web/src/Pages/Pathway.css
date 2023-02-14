@@ -2,7 +2,7 @@ html,
 body {
   width: 100%;
   height: 100%;
-  background-color: #7489ff;
+  background-color: #E48397;
 }
 
 .App {
@@ -18,7 +18,7 @@ body {
 .Bottom-area {
   position: relative;
   height: 10vh;
-  background-color: #7489ff;
+  background-color: #E4CDD3;
 }
 
 .Lines-area {
@@ -43,7 +43,7 @@ body {
 }
 
 .Neon-bottom {
-  background-color: #FF5E00;
+  background-color: #5E081E;
   border-radius: 50%;
   width: 60px;
   height: 60px;

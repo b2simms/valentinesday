@@ -22,11 +22,14 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '70vw',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  display: 'flex',
+  'flex-direction': 'column',
+  'text-align': 'center',
 };
 
 function AnswerForm() {
@@ -199,9 +202,18 @@ function AnswerForm() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <h1>Puzzle Complete!</h1>
-          <CelebrationIcon color='primary' />
-          <Button onClick={onPuzzleCompleteClick}>Ok</Button>
+          <h1>Puzzle Complete!!!</h1>
+          <div>
+            <CelebrationIcon color='primary' />
+            <CelebrationIcon color='secondary' />
+            <CelebrationIcon color='primary' />
+            <CelebrationIcon color='secondary' />
+            <CelebrationIcon color='primary' />
+            <CelebrationIcon color='secondary' />
+            <CelebrationIcon color='primary' />
+            <CelebrationIcon color='secondary' />
+          </div>
+          <Button onClick={onPuzzleCompleteClick}>OK</Button>
         </Box>
       </Modal>
     </div>
