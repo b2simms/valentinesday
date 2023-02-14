@@ -5,6 +5,8 @@ DEPLOY_REPO='../../app/'
 
 # build artifacts
 npm run build
+# add custom 404s
+cp ./build/index.html ./build/form/index.html
 
 # cleanup deploy repository
 rm -rf $DEPLOY_REPO/static

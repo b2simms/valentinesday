@@ -127,6 +127,39 @@
                     "validationType": "strict"
                 }
             ]
+        },
+        {
+            "type": "crochet",
+            "link": "/crochet-pattern",
+            "text": "Crochet the mystery pattern and the answer will reveal itself.",
+            "answers": [
+                {
+                    "label": "Revealed Answer",
+                    "value": "love"
+                }
+            ]
+        },
+        {
+            "type": "hacker",
+            "link": "https://puzzlersworld.com/hackerpuzzle/1.html",
+            "text": "Enter the answer when the hint is a card",
+            "answers": [
+                {
+                    "label": "Answer",
+                    "value": "jack"
+                }
+            ]
+        },
+        {
+            "type": "excel",
+            "link": "/secret-code.xlsx",
+            "text": "Open the spreadsheet and follow the instructions. The goal is to count the amount of 007's.",
+            "answers": [
+                {
+                    "label": "Amount of 007's",
+                    "value": "529"
+                }
+            ]
         }
     ]
 }
