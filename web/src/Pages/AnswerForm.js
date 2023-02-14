@@ -178,12 +178,12 @@ function AnswerForm() {
 
   return (
     <div className="App">
-      <div onClick={backButton} style={{ cursor: 'pointer' }}><ArrowBackIosIcon /></div>
+      <Button onClick={backButton} style={{ cursor: 'pointer', margin: '24px', color: "#B51A3A" }}><ArrowBackIosIcon />Back</Button>
       <h1>{puzzle.type}</h1>
       <p>Open the puzzle link and follow the instructions below</p>
       <p>
         <Link href={jumpLink} rel="noreferrer" target="_blank" underline="none">
-          <Button color="info" style={{ backgroundColor: "#B51A3A ", color: 'white' }} endIcon={<OpenInNewIcon />}>Puzzle Link</Button>
+          <Button color="info" style={{ backgroundColor: "#B51A3A", color: 'white' }} endIcon={<OpenInNewIcon />}>Puzzle Link</Button>
         </Link>
       </p>
       <p>
