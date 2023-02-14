@@ -6,8 +6,8 @@ export default function SingleNumberField({
     notifyAnswer,
     width
 }) {
-    const [value, setValue] = useState(null);
-    const [lastValidValue, setLastValidValue] = useState(null);
+    const [value, setValue] = useState('');
+    const [lastValidValue, setLastValidValue] = useState('');
 
     const onChange = (e) => {
         const re = /^[1-9\b]+$/;
