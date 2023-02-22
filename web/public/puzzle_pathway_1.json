@@ -129,17 +129,6 @@
             ]
         },
         {
-            "type": "crochet",
-            "link": "/crochet-pattern",
-            "text": "Crochet the mystery pattern and the answer will reveal itself.",
-            "answers": [
-                {
-                    "label": "Revealed Answer",
-                    "value": "love"
-                }
-            ]
-        },
-        {
             "type": "hacker",
             "link": "https://puzzlersworld.com/hackerpuzzle/1.html",
             "text": "Enter the answer when the hint is a card",
@@ -158,6 +147,17 @@
                 {
                     "label": "Amount of 007's",
                     "value": "529"
+                }
+            ]
+        },
+        {
+            "type": "crochet",
+            "link": "/crochet-pattern",
+            "text": "Crochet the mystery pattern and the answer will reveal itself.",
+            "answers": [
+                {
+                    "label": "Revealed Answer",
+                    "value": "love"
                 }
             ]
         }
