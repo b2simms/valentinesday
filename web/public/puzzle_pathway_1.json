@@ -182,6 +182,58 @@
                     "validationType": "strict"
                 }
             ]
+        },
+        {
+            "type": "sudoku",
+            "link": "/sudoku-3.png",
+            "text": "Fill in the middle square of the Sudoku puzzle",
+            "answers": [
+                {
+                    "label": "Top Left",
+                    "value": "1",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Top Middle",
+                    "value": "7",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Top Right",
+                    "value": "8",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Middle Left",
+                    "value": "9",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Middle Middle",
+                    "value": "6",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Middle Right",
+                    "value": "2",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Bottom Left",
+                    "value": "5",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Bottom Middle",
+                    "value": "4",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Bottom Right",
+                    "value": "3",
+                    "validationType": "strict"
+                }
+            ]
         }
     ]
 }
