@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Pathway() {
 
   const [completedCount, setCompletedCount] = useState(0);
+  const [puzzlePathwayData, setPuzzlePathwayData] = useState({});
   const [pathNodes, setPathNodes] = useState([]);
   const [pathEdges, setPathEdges] = useState([]);
   const navigate = useNavigate();
@@ -51,12 +52,11 @@ function Pathway() {
 
     axios.get(window.location.href + '/puzzle_pathway_1.json')
       .then(result => {
-        console.log('API data:');
-        console.log(result.data);
         const { nodes, edges } = generatePathNodes(result.data.puzzles);
         updateFavicon(result.data && result.data.faviconUrl);
         setPathNodes(nodes);
         setPathEdges(edges);
+        setPuzzlePathwayData(result.data);
 
         localStorage.setItem('PUZZLE_PATH_JSON', JSON.stringify(result.data));
       })
@@ -130,11 +130,15 @@ function Pathway() {
     return htmlNodes;
   }
 
+  const prizeLink = puzzlePathwayData?.prize?.link?.indexOf("http") === 0 ?
+    puzzlePathwayData?.prize?.link : window.location.href + puzzlePathwayData?.prize?.link;
+
   return (
     <div className="App" style={{ marginTop: '120px', height: (completedCount * TOP_OFFSET) + 150 + "px" }}>
       <div className="progressPath" style={{ height: (completedCount * TOP_OFFSET) - 50 + "px" }}></div>
       {pathEdges && pathEdges.length > 0 && renderEdges(pathEdges)}
       {pathNodes && pathNodes.length > 0 && renderNodes(pathNodes)}
+      {completedCount >= pathNodes?.length ? <img src={prizeLink} alt="Puzzle Prize" style={{ width: "100vw" }}></img> : ``}
     </div >
   );
 }

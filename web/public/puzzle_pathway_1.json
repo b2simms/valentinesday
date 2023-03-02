@@ -234,6 +234,20 @@
                     "validationType": "strict"
                 }
             ]
+        },
+        {
+            "type": "hunt",
+            "link": "/hunt-1.jpg",
+            "text": "Mystery Hunt",
+            "answers": [
+                {
+                    "label": "The Key",
+                    "value": "6270"
+                }
+            ]
         }
-    ]
+    ],
+    "prize": {
+        "link": "/dance-night.jpg"
+    }
 }
