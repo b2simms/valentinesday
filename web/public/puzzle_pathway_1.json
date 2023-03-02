@@ -160,6 +160,28 @@
                     "value": "love"
                 }
             ]
+        },
+        {
+            "type": "chess",
+            "link": "/chess-puzzles-2",
+            "text": "Write the answers to the chess puzzles using proper chess notation",
+            "answers": [
+                {
+                    "label": "Chess Puzzle 1",
+                    "value": "Kh3",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Chess Puzzle 2",
+                    "value": "Rc1",
+                    "validationType": "strict"
+                },
+                {
+                    "label": "Chess Puzzle 3",
+                    "value": "Qxh7+",
+                    "validationType": "strict"
+                }
+            ]
         }
     ]
 }
